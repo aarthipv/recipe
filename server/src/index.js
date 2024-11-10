@@ -11,4 +11,4 @@ app.use(cors());
 app.use("/auth",userRouter);
 
 mongoose.connect("mongodb+srv://aarthipv2004:MERNpassword123@recipes.d5pov.mongodb.net/recipes?retryWrites=true&w=majority&appName=recipes")
-app.listen(3002,() => console.log("Server started!"))
+app.listen(3001,() => console.log("Server started!"));
