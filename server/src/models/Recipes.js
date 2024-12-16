@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const recipeSchema = mongoose.Schema({
   name: {
@@ -15,7 +15,6 @@ const recipeSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-
   imageUrl: {
     type: String,
     required: true,
@@ -26,9 +25,9 @@ const recipeSchema = mongoose.Schema({
   },
   userOwner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
 });
 
-export const RecipesModel = mongoose.model("Recipes", recipeSchema);
+export const Recipe = mongoose.model('Recipe', recipeSchema);
