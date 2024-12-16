@@ -19,6 +19,10 @@ const recipeSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  videoUrl: {
+    type: String,  // Store the video URL here
+    required: false,
+  },
   cookingTime: {
     type: Number,
     required: true,
@@ -30,4 +34,4 @@ const recipeSchema = mongoose.Schema({
   },
 });
 
-export const Recipe = mongoose.model('Recipe', recipeSchema);
+export const RecipesModel = mongoose.model('Recipe', recipeSchema);

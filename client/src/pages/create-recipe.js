@@ -15,6 +15,7 @@ export const CreateRecipe = () => {
     imageUrl: "",
     cookingTime: 0,
     userOwner: userID,
+    video: null, // Add video state
   });
 
   const navigate = useNavigate();
@@ -36,21 +37,41 @@ export const CreateRecipe = () => {
     setRecipe({ ...recipe, ingredients });
   };
 
+  // Handle video file selection
+  const handleVideoChange = (event) => {
+    setRecipe({ ...recipe, video: event.target.files[0] });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", recipe.name);
+    formData.append("description", recipe.description);
+    formData.append("ingredients", JSON.stringify(recipe.ingredients)); // Make sure ingredients are sent as an array
+    formData.append("instructions", recipe.instructions);
+    formData.append("imageUrl", recipe.imageUrl);
+    formData.append("cookingTime", recipe.cookingTime);
+    formData.append("userOwner", recipe.userOwner);
+
+    // Append the video file if available
+    if (recipe.video) {
+      formData.append("video", recipe.video);
+    }
+
     try {
-      await axios.post(
-        "http://localhost:3001/recipes",
-        { ...recipe },
-        {
-          headers: { authorization: cookies.access_token },
-        }
-      );
+      await axios.post("http://localhost:3001/recipes", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: cookies.access_token,
+        },
+      });
 
       alert("Recipe Created");
       navigate("/");
     } catch (error) {
       console.error(error);
+      alert("Error creating recipe");
     }
   };
 
@@ -108,6 +129,14 @@ export const CreateRecipe = () => {
           name="cookingTime"
           value={recipe.cookingTime}
           onChange={handleChange}
+        />
+        <label htmlFor="video">Upload Video</label>
+        <input
+          type="file"
+          id="video"
+          name="video"
+          accept="video/*"
+          onChange={handleVideoChange} // Handle video file change
         />
         <button type="submit">Create Recipe</button>
       </form>

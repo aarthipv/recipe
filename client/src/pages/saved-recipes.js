@@ -20,6 +20,7 @@ export const SavedRecipes = () => {
 
     fetchSavedRecipes();
   }, []);
+
   return (
     <div>
       <h1>Saved Recipes</h1>
@@ -33,6 +34,20 @@ export const SavedRecipes = () => {
             <p>{recipe.instructions}</p>
             <img src={recipe.imageUrl} alt={recipe.name} />
             <p>Cooking Time: {recipe.cookingTime} minutes</p>
+
+            {/* Display the video if it's available */}
+            {recipe.videoUrl && (
+              <div>
+                <h3>Watch Video</h3>
+                <video controls>
+                  <source
+                    src={`http://localhost:3001${recipe.videoUrl}`}
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            )}
           </li>
         ))}
       </ul>
